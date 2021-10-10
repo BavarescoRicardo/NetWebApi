@@ -35,6 +35,8 @@ namespace NetWebApi
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddControllers();
+
             // Definindo uso do serviço 
             services.AddScoped<IProdutoServico, ProdutoServico>();
             services.AddSwaggerGen(c =>

@@ -16,9 +16,9 @@ namespace NetWebApi.Context
 
         public DbSet<Produto> Produtos { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+/*        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-/*            modelBuilder.Entity<Produto>().HasData(
+            modelBuilder.Entity<Produto>().HasData(
             new Produto
             {
                 Id = 1,
@@ -26,8 +26,8 @@ namespace NetWebApi.Context
                 Quantidade = 1,
                 Valor = 2,
                 Opcao = 1
-            });*/
-        }
+            });
+        }*/
     }
 
 
