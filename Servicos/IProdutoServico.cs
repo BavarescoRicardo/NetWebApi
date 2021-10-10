@@ -10,7 +10,7 @@ namespace NetWebApi.Servicos
     {
         Task<IEnumerable<Produto>> GetProdutos();
         Task<Produto> GetProduto(int id);
-        Task<IEnumerable<Produto>> GetProdutosByNome(string nome);
+        Task<IEnumerable<Produto>> GetProdutosByName(string nome);
         Task CreateProduto(Produto produto);
         Task UpdateProduto(Produto produto);
         Task DeleteProduto(Produto produto);

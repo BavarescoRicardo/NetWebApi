@@ -48,7 +48,7 @@ namespace NetWebApi.Servicos
             return await _context.Produtos.ToListAsync();
         }
 
-        public async Task<IEnumerable<Produto>> GetProdutosByNome(string nome)
+        public async Task<IEnumerable<Produto>> GetProdutosByName(string nome)
         {
             IEnumerable<Produto> produtos;
             if (!string.IsNullOrWhiteSpace(nome))
