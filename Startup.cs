@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NetWebApi.Context;
+using NetWebApi.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +29,14 @@ namespace NetWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Ricardo Bavaresco
+            // Definindo string conexão com o banco de dados
             services.AddDbContext<NetdbContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddControllers();
+            // Definindo uso do serviço 
+            services.AddScoped<IProdutoServico, ProdutoServico>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetWebApi", Version = "v1" });
