@@ -53,7 +53,14 @@ namespace NetWebApi
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetWebApi v1"));
-            }     
+            }
+
+            app.UseCors(options =>
+            {
+                options.WithOrigins("http://localhost:8080");
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
             
             app.UseHttpsRedirection();
 
