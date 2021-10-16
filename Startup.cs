@@ -59,7 +59,8 @@ namespace NetWebApi
             {
                 options.WithOrigins("http://localhost:3033",
                         "http://45.191.187.35:3033",
-                        "http://localhost:8080");
+                        "http://localhost:8080",
+                        "http://localhost:3000");
                 options.AllowAnyMethod();
                 options.AllowAnyHeader();
             });
