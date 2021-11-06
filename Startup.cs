@@ -39,6 +39,7 @@ namespace NetWebApi
 
             // Definindo uso do serviço 
             services.AddScoped<IProdutoServico, ProdutoServico>();
+            services.AddScoped<IUsuarioServico, UsuarioServico>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetWebApi", Version = "v1" });
@@ -57,13 +58,18 @@ namespace NetWebApi
 
             app.UseCors(options =>
             {
-                options.WithOrigins("http://localhost:3033",
-                        "http://45.191.187.35:3033",
-                        "http://localhost:8080",
-                        "http://localhost:3000");
+            /*
+             options.WithOrigins(
+                "http://localhost:3033",
+                "http://45.191.187.35:3033",
+                "http://localhost:8080",
+                "http://localhost:3000");
+
+            */
+                options.AllowAnyOrigin();
                 options.AllowAnyMethod();
                 options.AllowAnyHeader();
-            });
+        });
             
             app.UseHttpsRedirection();
 

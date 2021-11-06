@@ -15,21 +15,32 @@ namespace NetWebApi.Context
         }
 
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
-/*        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Produto>().HasData(
-            new Produto
-            {
-                Id = 1,
-                Nome = "Net visualsutido",
-                Quantidade = 1,
-                Valor = 2,
-                Opcao = 1
-            });
-        }*/
+
+        // Criar tabela
+        /*        protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                    modelBuilder.Entity<Usuario>()
+                        .ToTable("AspNetUsers", t => t.ExcludeFromMigrations());
+                }*/
+
+
+
+        // Popular tabela com dados
+        /*        protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                    modelBuilder.Entity<Usuario>().HasData(
+                     new Usuario
+                     {
+                         Id = 1,
+                         Nome = "Ricardo bav",
+                         Senha = "qwe123",
+                         token = "",
+                         Permissao = 3
+                     });
+                }*/
     }
 
 
-    
 }
