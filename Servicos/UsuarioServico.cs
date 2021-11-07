@@ -29,9 +29,18 @@ namespace NetWebApi.Servicos
             await _context.SaveChangesAsync();
         }
 
-        public Task FazerLogin(string nome, string senha)
+        public async Task<IEnumerable<Usuario>> FazerLogin(string nome, string senha)
         {
-            throw new NotImplementedException();
+            IEnumerable<Usuario> login;
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                login = await _context.Usuarios.Where(x => x.Nome.Contains(nome)).Where(x => x.Senha.Contains(senha)).ToListAsync();
+            }
+            else
+            {
+                login = null;
+            }
+            return login;
         }
 
         public async Task<Usuario> GetUsuario(int id)

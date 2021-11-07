@@ -14,7 +14,7 @@ namespace NetWebApi.Servicos
         Task CreateUsuario(Usuario usuario);
         Task UpdateUsuario(Usuario usuario);
         Task DeleteUsuario(Usuario usuario);
-        Task FazerLogin(string nome, string senha);
+        Task<IEnumerable<Usuario>> FazerLogin(string nome, string senha);
 
     }
 }

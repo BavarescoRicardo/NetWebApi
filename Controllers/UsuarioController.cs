@@ -72,6 +72,22 @@ namespace NetWebApi.Controllers
             }
         }
 
+        [HttpPost("fazerlogin")]
+        public async Task<ActionResult<Usuario>> FazerLogin(string nome, string senha)
+        {
+            try
+            {
+                var login = await _usuarioServico.FazerLogin(nome, senha);
+                return Ok(login);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Erro no login");
+            }
+
+        }
+
         // Inserir novo registro // criar
         [HttpPost]
         public async Task<ActionResult> Create(Usuario usuario)
