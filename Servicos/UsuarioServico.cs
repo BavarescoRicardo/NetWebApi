@@ -34,7 +34,7 @@ namespace NetWebApi.Servicos
             IEnumerable<Usuario> login;
             if (!string.IsNullOrWhiteSpace(nome))
             {
-                login = await _context.Usuarios.Where(x => x.Nome.Contains(nome)).Where(x => x.Senha.Contains(senha)).ToListAsync();
+                login = await _context.Usuarios.Where(x => x.ApelidoLogin.Contains(nome)).Where(x => x.Senha.Contains(senha)).ToListAsync();
             }
             else
             {
