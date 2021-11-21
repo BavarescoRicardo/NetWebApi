@@ -1,10 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NetWebApi.Context;
 using NetWebApi.Modelos;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
+using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace NetWebApi.Servicos
 {
@@ -28,22 +34,44 @@ namespace NetWebApi.Servicos
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
         }
-
-        public async Task<IEnumerable<Usuario>> FazerLogin(string nome, string senha)
+        /*
+                public async Task<IEnumerable<Usuario>> FazerLogin(string nome, string senha)
+                {
+                    IEnumerable<Usuario> login;
+                    if (!string.IsNullOrWhiteSpace(nome))
+                    {
+                        login = await _context.Usuarios.Where(x => x.ApelidoLogin.Contains(nome)).Where(x => x.Senha.Contains(senha)).ToListAsync();
+                    }
+                    else
+                    {
+                        login = null;
+                    }
+                    return login;
+                }
+        */
+        [HttpPost]
+        public async Task<IEnumerable<Usuario>> FazerLogin([FromBody] Usuario model)
         {
-            IEnumerable<Usuario> login;
-            if (!string.IsNullOrWhiteSpace(nome))
+            try
             {
-                login = await _context.Usuarios.Where(x => x.ApelidoLogin.Contains(nome)).Where(x => x.Senha.Contains(senha)).ToListAsync();
+                IEnumerable<Usuario> login;
+                if (!string.IsNullOrWhiteSpace(model.ApelidoLogin))
+                {
+                    login = await _context.Usuarios.Where(x => x.ApelidoLogin == model.ApelidoLogin).Where(x => x.Senha == model.Senha).ToListAsync();
+                }
+                else
+                {
+                    login = null;
+                }
+                return login;
             }
-            else
+            catch (Exception )
             {
-                login = null;
+                return null;
             }
-            return login;
         }
 
-        public async Task<Usuario> GetUsuario(int id)
+    public async Task<Usuario> GetUsuario(int id)
         {
             try
             {

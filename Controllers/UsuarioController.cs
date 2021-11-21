@@ -73,17 +73,16 @@ namespace NetWebApi.Controllers
         }
 
         [HttpPost("fazerlogin")]
-        public async Task<ActionResult<Usuario>> FazerLogin(string nome, string senha)
+        public async Task<ActionResult<Usuario>> FazerLogin([FromBody] Usuario user)
         {
             try
             {
-                var login = await _usuarioServico.FazerLogin(nome, senha);
+                var login = await _usuarioServico.FazerLogin(user);
                 return Ok(login);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return BadRequest("Erro no login");
+                return BadRequest("Usuário ou senha inválidos " + ex.Message); // ou NotFound(nao encontrado apelido e senha)
             }
 
         }
