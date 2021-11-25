@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NetWebApi.Modelos;
 using NetWebApi.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Threading.Tasks;
 
 namespace NetWebApi.Controllers
@@ -14,7 +16,7 @@ namespace NetWebApi.Controllers
 
     public class UsuarioController : ControllerBase
     {
-        private IUsuarioServico _usuarioServico;
+        private IUsuarioServico _usuarioServico;       
 
         public UsuarioController(IUsuarioServico usuarioServico)
         {
@@ -73,12 +75,33 @@ namespace NetWebApi.Controllers
         }
 
         [HttpPost("fazerlogin")]
-        public async Task<ActionResult<Usuario>> FazerLogin([FromBody] Usuario user)
+        public async Task<ActionResult<dynamic>> FazerLogin([FromBody] Usuario user)
         {
             try
             {
                 var login = await _usuarioServico.FazerLogin(user);
-                return Ok(login);
+                // tenta converter o objeto retornado pelo banco para o modelo que eu posso usar
+                foreach (Usuario usuario in login)
+                {
+                    if (usuario.Id > 0)
+                        user = usuario;
+                }
+                // Verifica se o usuário existe
+                if (user == null)
+                    return NotFound(new { message = "Usuário ou senha inválidos" });
+
+                // Gera o Token
+                var token = TokenService.GenerateToken(user);
+
+                // Oculta a senha
+                user.Senha = "";
+
+                // Retorna os dados
+                return new
+                {
+                    user = login,
+                    token = token
+                };
             }
             catch (Exception ex)
             {
@@ -146,5 +169,30 @@ namespace NetWebApi.Controllers
                 return BadRequest("Request invalido");
             }
         }
+
+        [HttpGet]
+        [Route("anonymous")]
+        [AllowAnonymous]
+        public string Anonymous() => "Anônimo";
+
+        [HttpGet]
+        [Route("authenticated")]
+        [Authorize]
+        public string Authenticated() => String.Format("Autenticado - {0}", User.Identity.Name);
+
+        [HttpGet]
+        [Route("employee")]
+        [Authorize(Roles = "Autorizado")]
+        public string Employee() => "Autorizado";
+
+        [HttpGet]
+        [Route("Gestor")]
+        [Authorize(Roles = "3,2")]
+        public string Manager() => "Gestor";
+
+        [HttpGet]
+        [Route("Administrador")]
+        [Authorize(Roles = "Administrador")]
+        public string Testeapi() => "Deu certo ";
     }
 }

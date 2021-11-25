@@ -34,21 +34,9 @@ namespace NetWebApi.Servicos
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
         }
-        /*
-                public async Task<IEnumerable<Usuario>> FazerLogin(string nome, string senha)
-                {
-                    IEnumerable<Usuario> login;
-                    if (!string.IsNullOrWhiteSpace(nome))
-                    {
-                        login = await _context.Usuarios.Where(x => x.ApelidoLogin.Contains(nome)).Where(x => x.Senha.Contains(senha)).ToListAsync();
-                    }
-                    else
-                    {
-                        login = null;
-                    }
-                    return login;
-                }
-        */
+
+
+
         [HttpPost]
         public async Task<IEnumerable<Usuario>> FazerLogin([FromBody] Usuario model)
         {
@@ -70,6 +58,8 @@ namespace NetWebApi.Servicos
                 return null;
             }
         }
+
+
 
     public async Task<Usuario> GetUsuario(int id)
         {
