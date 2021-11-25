@@ -187,7 +187,7 @@ namespace NetWebApi.Controllers
 
         [HttpGet]
         [Route("Gestor")]
-        [Authorize(Roles = "3,2")]
+        [Authorize(Roles = "Gestor")]
         public string Manager() => "Gestor";
 
         [HttpGet]
