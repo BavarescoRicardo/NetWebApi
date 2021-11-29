@@ -99,7 +99,7 @@ namespace NetWebApi.Controllers
                 // Retorna os dados
                 return new
                 {
-                    user = login,
+                    user = user,
                     token = token
                 };
             }
