@@ -79,17 +79,20 @@ namespace NetWebApi
 
             app.UseCors(options =>
             {
-            /*
-             options.WithOrigins(
-                "http://localhost:3033",
-                "http://45.191.187.35:3033",
-                "http://localhost:8080",
-                "http://localhost:3000");
 
-            */
-                options.AllowAnyOrigin();
+                options.WithOrigins(
+                   "http://localhost:3033",
+                   "http://45.191.187.35:3033",
+                   "http://localhost:8080",
+                   "http://localhost:3000",
+                   "http://10.0.0.172:3033",
+                   "http://10.0.0.172:3000") ;;
+
+            
+            //    options.AllowAnyOrigin();
                 options.AllowAnyMethod();
                 options.AllowAnyHeader();
+                options.AllowCredentials();
             });
 
             app.UseAuthentication();
