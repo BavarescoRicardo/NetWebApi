@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NetWebApi.Modelos;
 using NetWebApi.Servicos;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using System.Threading.Tasks;
@@ -16,11 +18,13 @@ namespace NetWebApi.Controllers
 
     public class UsuarioController : ControllerBase
     {
-        private IUsuarioServico _usuarioServico;       
+        private IUsuarioServico _usuarioServico;
+        public static IWebHostEnvironment _environment;
 
-        public UsuarioController(IUsuarioServico usuarioServico)
+        public UsuarioController(IUsuarioServico usuarioServico, IWebHostEnvironment environment)
         {
             _usuarioServico = usuarioServico;
+            _environment = environment;
         }
 
         [HttpGet]
@@ -170,10 +174,81 @@ namespace NetWebApi.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("anonymous")]
-        [AllowAnonymous]
-        public string Anonymous() => "Anônimo";
+         /*[HttpPost]
+         [ValidateAntiForgeryToken]
+         [Route("postarfotoperfil")]
+        public async Task<IActionResult> InserirFotoPerfil([FromBody] FotoView model)
+        {           
+            string nomeUnicoArquivo = UploadedFile(model.Foto);
+            FotoView foto = new FotoView
+            {
+                NomeImagem = nomeUnicoArquivo,
+                regerenciaadd = model.regerenciaadd,
+                refUsuario = model.refUsuario,
+            };
+            
+            return Ok($"Postado imagem nome:  {model.NomeImagem} ");
+        }*/
+/*
+        [HttpPost]
+        [Route("postarfotoperfil")]
+        public async Task<IActionResult> UploadedFile([FromForm] IFormFile model)
+        {
+            string nomeUnicoArquivo = null;
+
+            try
+            {
+                string pastaFotos = Path.Combine("C:Users/Ninguem/Desktop/Desenvolvimento/Evento Web/Net Api/NetWebApi/", "Imagens");
+                nomeUnicoArquivo = Guid.NewGuid().ToString() + "_" + model.FileName;
+                string caminhoArquivo = Path.Combine(pastaFotos, nomeUnicoArquivo);
+
+                await using (Stream stream = new FileStream(@"file path", FileMode.Create))
+                {
+                    using (var binaryReader = new BinaryReader(stream))
+                    {
+                        // Save the file here.
+                        model.CopyTo(stream);
+                    }
+                }
+                return Ok($"Postado imagem nome:  {nomeUnicoArquivo} ");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest("erro no servidor com a imagem.  " + ex);
+            }                        
+            
+        }
+
+        [HttpPost("uploadperfil")]
+        public async Task<string> EnviaArquivo([FromForm] IFormFile arquivo)
+        {
+            if (arquivo.Length > 0)
+            {
+                try
+                {
+                    if (!Directory.Exists(_environment.WebRootPath + "\\imagens\\"))
+                    {
+                        Directory.CreateDirectory(_environment.WebRootPath + "\\imagens\\");
+                    }
+                    using (FileStream filestream = System.IO.File.Create(_environment.WebRootPath + "\\imagens\\" + arquivo.FileName))
+                    {
+                        await arquivo.CopyToAsync(filestream);
+                        filestream.Flush();
+                        return "\\imagens\\" + arquivo.FileName;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return ex.ToString();
+                }
+            }
+            else
+            {
+                return "Ocorreu uma falha no envio do arquivo...";
+            }
+        }*/
+
 
         [HttpGet]
         [Route("authenticated")]
