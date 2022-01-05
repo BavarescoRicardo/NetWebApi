@@ -23,6 +23,7 @@ namespace NetWebApi.Servicos
             _context = context;
         }
 
+        [HttpPost]
         public async Task CreateUsuario(Usuario usuario)
         {
             _context.Usuarios.Add(usuario);

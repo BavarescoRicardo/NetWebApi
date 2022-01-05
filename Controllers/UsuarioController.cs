@@ -115,8 +115,8 @@ namespace NetWebApi.Controllers
         }
 
         // Inserir novo registro // criar
-        [HttpPost]
-        public async Task<ActionResult> Create(Usuario usuario)
+        [HttpPost("cadastrarnovo")]
+        public async Task<ActionResult> Create([FromBody] Usuario usuario)
         {
             try
             {
