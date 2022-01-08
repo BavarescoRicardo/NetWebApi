@@ -38,7 +38,7 @@ namespace NetWebApi
             {
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // Definindo uso do serviço 
             services.AddScoped<IProdutoServico, ProdutoServico>();
